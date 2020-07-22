@@ -5,8 +5,8 @@ from django.db import models
 class Evento(models.Model):
     titulo = models.CharField(max_length=100) # máximo 100 caracteres, não pode ser branco ou nulo
     descricao = models.TextField(blank=True, null=True) # não tem limite de caracteres, pode ser branco ou nulo
-    data_evento = models.DateField(verbose_name='Data do evento') #campo de data, não pode ser nulo, e customiza nome
-    data_criacao = models.DateField(auto_now=True) #campo de data, pega hora da inserção automaticamente
+    data_evento = models.DateTimeField(verbose_name='Data do evento') #campo de data e hora, não pode ser nulo, e customiza nome
+    data_criacao = models.DateTimeField(auto_now=True) #campo de data e hora, pega hora da inserção automaticamente
 
 # para migrar esta tabela sem adicionar ao banco de dados, executar:
 # python manage.py makemigrations core
@@ -43,3 +43,10 @@ class Evento(models.Model):
     def __str__(self):
         return self.titulo # sempre que alguém chamar este objeto, será retornado o nome do titulo
 
+# os campos data_evento e data_criacao estavam apenas como DateField e não como DateTimeField,
+# para alterá-los, além de mudar o tipo neste arquivo, deve-se parar a aplicação e executar:
+# python manage.py makemigrations core                  (cria o 0002)
+# python manage.py sqlmigrate core 0002                 (mostra as modificações)
+# python manage.py migrate core 0002                    (aplica as modificações)
+# após isto, os campos DateTimeField dos eventos existentes estarão em branco,
+# mas é possível editá-los e então exibirão data e hora como devia ser
