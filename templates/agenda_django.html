@@ -7,10 +7,12 @@
 <body>
     <h2>Agendamentos</h2>
 
-    {% for evento in eventos %} <!-- quando está entre "chavePorcentagem" realiza comandos python -->
-        <b>{{ evento.titulo }} - {{ evento.data_evento }}</b>
-                                <!-- quando está entre "chaveChave" exibe um elemento -->
-    {% endfor %}                <!-- este bloco escreve o titulo e a data de cada evento na lista eventos -->
+    <ul>
+        {% for evento in eventos %} <!-- quando está entre "chavePorcentagem" realiza comandos python -->
+            <li>{{ evento.titulo }} - {{ evento.data_evento }}</li>
+                                    <!-- quando está entre "chaveChave" exibe um elemento -->
+        {% endfor %}                <!-- este bloco escreve o titulo e a data de cada evento na lista eventos -->
+    </ul>
 
 </body>
 </html>
