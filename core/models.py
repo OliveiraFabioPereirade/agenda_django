@@ -61,3 +61,6 @@ class Evento(models.Model):
 #       depois, digitar 1 para preencher campos vazios e atribuir eventos existentes ao admin'
 # python manage.py sqlmigrate core 0003                 (mostra as modificações)
 # python manage.py migrate core 0003                    (aplica as modificações)
+
+    def get_data_evento(self): # cria função
+        return self.data_evento.strftime('%d/%m%y %H:%M hrs.') # que retorna a data e hora do evento formatadas
