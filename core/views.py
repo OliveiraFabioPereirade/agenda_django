@@ -12,6 +12,6 @@ def eventos(request, titulo_evento): # função que recebe requisição e títul
 
 
 def lista_eventos(request): # função que
-    evento = Evento.objects.get(id=1) # obtém o primeiro evento (íd=1)
-    response = {'evento' : evento} # cria um dicionário com o evento
-    return render(request, 'agenda_django.html', response) # renderiza a página 'agenda_django.html' e passa o dicionário
+    evento = Evento.objects.all() # obtém uma lista com todos os eventos
+    dados = {'eventos' : evento} # cria um dicionário com a lista de eventos
+    return render(request, 'agenda_django.html', dados) # renderiza a página 'agenda_django.html' e passa o dicionário
