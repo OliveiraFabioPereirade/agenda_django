@@ -5,8 +5,8 @@ from django.db import models
 class Evento(models.Model):
     titulo = models.CharField(max_length=100) # máximo 100 caracteres, não pode ser branco ou nulo
     descricao = models.TextField(blank=True, null=True) # não tem limite de caracteres, pode ser branco ou nulo
-    data_evento = models.DateField() #campo de data e hora, não pode ser nulo
-    data_criacao = models.DateField(auto_now=True) #campo de data e hora, pega hora da inserção automaticamente
+    data_evento = models.DateField(verbose_name='Data do evento') #campo de data, não pode ser nulo, e customiza nome
+    data_criacao = models.DateField(auto_now=True) #campo de data, pega hora da inserção automaticamente
 
 # para migrar esta tabela sem adicionar ao banco de dados, executar:
 # python manage.py makemigrations core
