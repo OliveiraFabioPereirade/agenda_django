@@ -75,10 +75,15 @@ WSGI_APPLICATION = 'agenda_django.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.sqlite3',       
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'), # este banco de dados é destinado para desenvolvimento
     }
 }
+# criação de tabelas executar:
+# python manage.py migrate
+
+# criação de super usuário executar:
+# python manage.py createsuperuser -- user name admin
 
 
 # Password validation
