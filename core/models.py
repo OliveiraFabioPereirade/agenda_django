@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User # importa lista usuários do django
 
 # Create your models here.
 
@@ -7,6 +8,8 @@ class Evento(models.Model):
     descricao = models.TextField(blank=True, null=True) # não tem limite de caracteres, pode ser branco ou nulo
     data_evento = models.DateTimeField(verbose_name='Data do evento') #campo de data e hora, não pode ser nulo, e customiza nome
     data_criacao = models.DateTimeField(auto_now=True) #campo de data e hora, pega hora da inserção automaticamente
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE) # acrescenta foreign key com usuários do django
+                                                                # caso o usuário seja deletado, seus eventos também serão
 
 # para migrar esta tabela sem adicionar ao banco de dados, executar:
 # python manage.py makemigrations core
@@ -50,3 +53,11 @@ class Evento(models.Model):
 # python manage.py migrate core 0002                    (aplica as modificações)
 # após isto, os campos DateTimeField dos eventos existentes estarão em branco,
 # mas é possível editá-los e então exibirão data e hora como devia ser
+
+# para transformar a aplicação em multiusuário, insere uma foreign key com usuários do django na tabela eventos,
+# parar a aplicação e e executar:
+# python manage.py makemigrations core                  (cria o 0003)
+#       perguntará se manterá campos já existentes: responder 1 para mantê-los
+#       depois, digitar 1 para preencher campos vazios e atribuir eventos existentes ao admin'
+# python manage.py sqlmigrate core 0003                 (mostra as modificações)
+# python manage.py migrate core 0003                    (aplica as modificações)
