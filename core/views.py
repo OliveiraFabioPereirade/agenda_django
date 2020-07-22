@@ -1,4 +1,6 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
+#                                                      |
+#                                                      +--> necessário para redirecionar rotas
 from core.models import Evento
 
 # Create your views here.
@@ -15,3 +17,6 @@ def lista_eventos(request): # função que
     evento = Evento.objects.all() # obtém uma lista com todos os eventos
     dados = {'eventos' : evento} # cria um dicionário com a lista de eventos
     return render(request, 'agenda_django.html', dados) # renderiza a página 'agenda_django.html' e passa o dicionário
+
+def index(request): # função que
+    return redirect('/agenda/') # redireciona requisição para rota '/agenda/'

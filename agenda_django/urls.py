@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('eventos/<titulo_evento>', views.eventos),  # cria rota 'titulo_evento/' para executar 'eventos'
     path('agenda/', views.lista_eventos), # cria rota 'agenda/' para executar 'lista_eventos'
+    path('', views.index),  # cria rota '' para executar 'index' e redirecionar rota
 ]
