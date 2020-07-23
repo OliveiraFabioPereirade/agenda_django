@@ -6,8 +6,9 @@ from django.shortcuts import render, HttpResponse, redirect
 
 from core.models import Evento
 from django.contrib.auth.decorators import login_required  # decorador (começa com @) que exige autênticação para função
-from django.contrib.auth import authenticate, login
-#                                   |           |
+from django.contrib.auth import authenticate, login, logout
+#                                   |           |       |
+#                                   |           |       +--> permite logout
 #                                   |           +--> permite login
 #                                   +--> permite autenticação
 
@@ -40,3 +41,7 @@ def submit_login(request):  # função que
         return redirect('/') # redireciona para a página principal
     else:             # se requisição não for POST:
         return redirect('/') # redireciona para a página principal
+
+def logout_user(request):  # função que
+    logout(request) # realiza logout do usuário
+    return redirect('/')  # redireciona para a página principal
