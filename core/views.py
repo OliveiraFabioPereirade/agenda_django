@@ -1,8 +1,15 @@
-from django.shortcuts import render, HttpResponse
-#                                         |
-#                                         +--> transforma argumento em resposta HTTP
+from django.shortcuts import render, HttpResponse, redirect
+#                              |          |           |
+#                              |          |           +--> redireciona requisição para outra rota
+#                              |          +--> transforma argumento em resposta HTTP
+#                              +--> renderiza elementos HTML
+
 from core.models import Evento
 from django.contrib.auth.decorators import login_required  # decorador (começa com @) que exige autênticação para função
+from django.contrib.auth import authenticate, login
+#                                   |           |
+#                                   |           +--> permite login
+#                                   +--> permite autenticação
 
 # Create your views here.
 
@@ -15,9 +22,21 @@ def eventos(request, titulo_evento): # função que recebe requisição e títul
 
 @login_required(login_url='/login/')  # exige autênticação para função, sem autenticação: direciona para a página '/login/'
 def lista_eventos(request): # função que
-    evento = Evento.objects.all() # obtém uma lista com todos os eventos
+    usuario = request.user # pega o nome do usuário na requisição
+    evento = Evento.objects.filter(usuario= usuario) # obtém uma lista dos eventos do usuário da requisição
     dados = {'eventos' : evento} # cria um dicionário com a lista de eventos
     return render(request, 'agenda_django.html', dados) # renderiza a página 'agenda_django.html' e passa o dicionário
 
 def login_user(request):    # função que
     return render(request, 'login.html') #renderiza a página 'login.html'
+
+def submit_login(request):  # função que
+    if request.POST:  # se requisição     for POST:
+        username = request.POST.get('username') # pega o valor do username na requisição
+        password = request.POST.get('password') # pega o valor do password na requisição
+        usuario = authenticate(username= username, password= password) # tenta autenticar usuário
+        if usuario is not None: # se autenticação não retornou vazio
+            login(request, usuario) # realiza login do usuário
+        return redirect('/') # redireciona para a página principal
+    else:             # se requisição não for POST:
+        return redirect('/') # redireciona para a página principal

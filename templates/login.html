@@ -2,9 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Agenda Django</title>
 </head>
 <body>
     <h1>Login</h1>
+    <form action="submit" method="POST">{% csrf_token %} <!-- token impede erro de CSRF (se fosse GET não precisaria) -->
+        <!-- quando clicar no botão "submit"
+        envia um POST para a rota '\login\submit\'
+        com os dados dentro do form (username e password)  -->
+        <div align="center">
+            <label>Usuário:</label>
+            <input type="text" name="username">
+            <label>Senha:</label>
+            <input type="password" name="password">
+            <button type="submit">Entrar</button>
+        </div>
+    </form>
 </body>
 </html>
