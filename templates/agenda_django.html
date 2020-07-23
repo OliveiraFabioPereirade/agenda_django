@@ -4,6 +4,10 @@
 
     <h2>Agendamentos</h2>
 
+    <a href="evento/">  <!-- clicar no botão redireciona para página 'evento.html' -->
+        <button type="button">Novo evento</button>
+    </a>
+
     <ul style="font-size: 18px">    <!-- aumenta letra -->
         {% for evento in eventos %} <!-- quando está entre "chavePorcentagem" realiza comandos python -->
             <li>{{ evento.titulo }} - {{ evento.get_data_evento }}</li>
