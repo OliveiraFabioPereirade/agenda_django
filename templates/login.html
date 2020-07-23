@@ -5,7 +5,9 @@
     <title>Agenda Django</title>
 </head>
 <body>
+
     <h1>Login</h1>
+
     <form action="submit" method="POST">{% csrf_token %} <!-- token impede erro de CSRF (se fosse GET não precisaria) -->
         <!-- quando clicar no botão "submit"
         envia um POST para a rota '\login\submit\'
@@ -18,5 +20,12 @@
             <button type="submit">Entrar</button>
         </div>
     </form>
+
+    {% for message in messages %}
+        <div align="center">
+            <strong>Erro: </strong>{{ message }}
+        </div>
+    {% endfor %}
+
 </body>
 </html>

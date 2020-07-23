@@ -6,6 +6,7 @@ from django.shortcuts import render, HttpResponse, redirect
 
 from core.models import Evento
 from django.contrib.auth.decorators import login_required  # decorador (começa com @) que exige autênticação para função
+from django.contrib import messages # permite passar mensagens
 from django.contrib.auth import authenticate, login, logout
 #                                   |           |       |
 #                                   |           |       +--> permite logout
@@ -38,6 +39,8 @@ def submit_login(request):  # função que
         usuario = authenticate(username= username, password= password) # tenta autenticar usuário
         if usuario is not None: # se autenticação não retornou vazio
             login(request, usuario) # realiza login do usuário
+        else:
+            messages.error(request, "Usuário ou senha invalidos!") # informa que o usuário ou a senha estão errados
         return redirect('/') # redireciona para a página principal
     else:             # se requisição não for POST:
         return redirect('/') # redireciona para a página principal
