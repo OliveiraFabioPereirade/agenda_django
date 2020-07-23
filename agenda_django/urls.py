@@ -23,7 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('eventos/<titulo_evento>', views.eventos),  # cria rota 'titulo_evento/' para executar 'eventos'
     path('agenda/', views.lista_eventos), # cria rota 'agenda/' para executar 'lista_eventos'
-    path('agenda/evento/', views.lista_evento), # cria rota 'agenda/evento' para cadastrar eventos
+    path('agenda/evento/', views.evento), # cria rota 'agenda/evento' para permitir o cadastro de eventos
+    path('agenda/evento/submit', views.submit_evento), # cria rota 'agenda/evento/submit' para salvar eventos cadastrados
     path('', RedirectView.as_view(url= '/agenda/')),  # redireciona para rota '/agenda/' como se fosse uma view
     path('login/', views.login_user),  # cria rota 'login/' para permitir login do usuário
     path('login/submit', views.submit_login),  # cria rota 'login/submit/' para tratar login do usuário

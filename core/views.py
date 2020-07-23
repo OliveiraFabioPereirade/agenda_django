@@ -30,7 +30,20 @@ def lista_eventos(request): # função que
     return render(request, 'agenda_django.html', dados) # renderiza a página 'agenda_django.html' e passa o dicionário
 
 @login_required(login_url='/login/')  # exige autênticação para função, sem autenticação: direciona para a página '/login/'
-def lista_evento(request):  # função que
+def submit_evento(request):  # função que
+    if request.POST:  # se requisição     for POST:
+        titulo = request.POST.get('titulo') # pega o valor do titulo no POST da requisição
+        data_evento = request.POST.get('data_evento') # pega o valor do data_evento no POST da requisição
+        descricao = request.POST.get('descricao') # pega o valor do descricao no POST da requisição
+        usuario = request.user # pega o valor do usuario na requisição
+        Evento.objects.create(titulo= titulo,
+                              data_evento= data_evento,
+                              descricao= descricao,
+                              usuario= usuario)
+    return redirect('/') # redireciona para a página principal
+
+@login_required(login_url='/login/')  # exige autênticação para função, sem autenticação: direciona para a página '/login/'
+def evento(request):  # função que
     return render(request, 'evento.html') # renderiza a página 'evento.html'
 
 def login_user(request):    # função que
@@ -38,8 +51,8 @@ def login_user(request):    # função que
 
 def submit_login(request):  # função que
     if request.POST:  # se requisição     for POST:
-        username = request.POST.get('username') # pega o valor do username na requisição
-        password = request.POST.get('password') # pega o valor do password na requisição
+        username = request.POST.get('username') # pega o valor do username no POST da requisição
+        password = request.POST.get('password') # pega o valor do password no POST da requisição
         usuario = authenticate(username= username, password= password) # tenta autenticar usuário
         if usuario is not None: # se autenticação não retornou vazio
             login(request, usuario) # realiza login do usuário
