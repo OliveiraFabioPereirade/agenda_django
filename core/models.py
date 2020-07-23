@@ -10,6 +10,7 @@ class Evento(models.Model):
     data_criacao = models.DateTimeField(auto_now=True) #campo de data e hora, pega hora da inserção automaticamente
     usuario = models.ForeignKey(User, on_delete=models.CASCADE) # acrescenta foreign key com usuários do django
                                                                 # caso o usuário seja deletado, seus eventos também serão
+    local = models.CharField(max_length=100, blank=True, null=True)  # máximo 100 caracteres, pode ser branco ou nulo
 
 # para migrar esta tabela sem adicionar ao banco de dados, executar:
 # python manage.py makemigrations core
@@ -63,4 +64,10 @@ class Evento(models.Model):
 # python manage.py migrate core 0003                    (aplica as modificações)
 
     def get_data_evento(self): # cria função
-        return self.data_evento.strftime('%d/%m%y %H:%M hrs.') # que retorna a data e hora do evento formatadas
+        return self.data_evento.strftime('%d/%m/%y %H:%M hrs.') # que retorna a data e hora do evento formatadas
+
+# para guardar o local do evento, insere o campo 'local' na tabela eventos,
+# parar a aplicação e e executar:
+# python manage.py makemigrations core                  (cria o 0004)
+# python manage.py sqlmigrate core 0004                 (mostra as modificações)
+# python manage.py migrate core 0004                    (aplica as modificações)

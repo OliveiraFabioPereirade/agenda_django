@@ -35,11 +35,13 @@ def submit_evento(request):  # função que
         titulo = request.POST.get('titulo') # pega o valor do titulo no POST da requisição
         data_evento = request.POST.get('data_evento') # pega o valor do data_evento no POST da requisição
         descricao = request.POST.get('descricao') # pega o valor do descricao no POST da requisição
+        local = request.POST.get('local') # pega o valor do local no POST da requisição
         usuario = request.user # pega o valor do usuario na requisição
         Evento.objects.create(titulo= titulo,
                               data_evento= data_evento,
                               descricao= descricao,
-                              usuario= usuario)
+                              usuario= usuario,
+                              local= local)
     return redirect('/') # redireciona para a página principal
 
 @login_required(login_url='/login/')  # exige autênticação para função, sem autenticação: direciona para a página '/login/'
