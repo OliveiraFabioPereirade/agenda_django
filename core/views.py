@@ -29,6 +29,10 @@ def lista_eventos(request): # função que
     dados = {'eventos' : evento} # cria um dicionário com a lista de eventos
     return render(request, 'agenda_django.html', dados) # renderiza a página 'agenda_django.html' e passa o dicionário
 
+@login_required(login_url='/login/')  # exige autênticação para função, sem autenticação: direciona para a página '/login/'
+def lista_evento(request):  # função que
+    return render(request, 'evento.html') # renderiza a página 'evento.html'
+
 def login_user(request):    # função que
     return render(request, 'login.html') #renderiza a página 'login.html'
 
@@ -41,10 +45,9 @@ def submit_login(request):  # função que
             login(request, usuario) # realiza login do usuário
         else:
             messages.error(request, "Usuário ou senha invalidos!") # informa que o usuário ou a senha estão errados
-        return redirect('/') # redireciona para a página principal
-    else:             # se requisição não for POST:
-        return redirect('/') # redireciona para a página principal
+    return redirect('/') # redireciona para a página principal
 
 def logout_user(request):  # função que
     logout(request) # realiza logout do usuário
     return redirect('/')  # redireciona para a página principal
+
