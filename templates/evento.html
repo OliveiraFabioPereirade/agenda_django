@@ -7,23 +7,24 @@
     <form action="submit" method="POST">{% csrf_token %} <!-- token impede erro de CSRF (se fosse GET não precisaria) -->
         <!-- quando clicar no botão "submit"
         envia um POST para a rota '\login\submit\'
-        com os dados dentro do form (titulo, data_evento, local e descricao)  -->
+        com os dados dentro do form (id_evento, titulo, data_evento, local e descricao)  -->
         <label>Título</label>
-        <br>
-        <input type="text" name="titulo" size="23">
-        <br>
+        <input type="number" name="id_evento" value="{{ evento.id }}" hidden>
+        <br> <!-- o input acima é invisível devido ao 'hidden', mas serve para passar o id_evento no submit -->
+        <input type="text" name="titulo" size="23" value="{{ evento.titulo }}">
+        <br>                                  <!-- value mostra titulo se for uma alteração -->
         <label>Data do Evenvo</label>
         <br>
-        <input type="datetime-local" name="data_evento">
-        <br>
+        <input type="datetime-local" name="data_evento" value="{{ evento.get_data_input_evento }}">
+        <br>                                       <!-- value mostra data se for uma alteração -->
         <label>Local</label>
         <br>
-        <input type="text" name="local" size="23">
-        <br>
+        <input type="text" name="local" size="23" value="{{ evento.local }}">
+        <br>                                 <!-- value mostra local se for uma alteração -->
         <label>Descrição</label>
         <br>
-        <textarea name="descricao" rows="5" cols="24"></textarea>
-        <br><br>
+        <textarea name="descricao" rows="5" cols="24">{{ evento.descricao }}</textarea>
+        <br><br>                                    <!-- mostra descricao se for uma alteração -->
         <button type="submit">Salvar</button>
         <a href="/"> <!-- clicar no botão "cancelar" redireciona para a página principal -->
             <button type="button">Cancelar</button>

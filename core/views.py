@@ -46,16 +46,28 @@ def submit_evento(request):  # função que
         descricao = request.POST.get('descricao') # pega o valor do descricao no POST da requisição
         local = request.POST.get('local') # pega o valor do local no POST da requisição
         usuario = request.user # pega o valor do usuario na requisição
-        Evento.objects.create(titulo= titulo,
-                              data_evento= data_evento,
-                              descricao= descricao,
-                              usuario= usuario,
-                              local= local)
+        id_evento = request.POST.get('id_evento') # pega o valor do id_evento no POST da requisição
+        if id_evento: # se id_evento não for vazio, é uma alteração, então:
+            Evento.objects.filter(id= id_evento).update(titulo= titulo,            #atualiza evento e altera campos: titulo
+                                                        data_evento= data_evento,  #                                 data_evento
+                                                        descricao= descricao,      #                                 descricao
+                                                        local= local)              #                                 local
+        else:         # se id_evento     for vazio, é uma inserção, então:
+            Evento.objects.create(titulo= titulo,            #cria evento e preenche campos: titulo
+                                  data_evento= data_evento,  #                               data_evento
+                                  descricao= descricao,      #                               descricao
+                                  usuario= usuario,          #                               usuario
+                                  local= local)              #                               local
     return redirect('/') # redireciona para a página principal
 
 @login_required(login_url='/login/')  # exige autênticação para função, sem autenticação: direciona para a página '/login/'
 def evento(request):  # função que
-    return render(request, 'evento.html') # renderiza a página 'evento.html'
+    id_evento = request.GET.get('id') # pega o valor do id_evento no GET da requisição
+    # print(id_evento) #exibe valor do id_evento
+    dados = {} # inicialmente não há dados, para o caso de uma inserção de eventos
+    if id_evento: #se há id_evento, é uma alteração, então:
+        dados ['evento']= Evento.objects.get(id=id_evento) # preenche 'dados'^; com dados do evento identificado pelo id_evento
+    return render(request, 'evento.html', dados) # renderiza a página 'evento.html' e passa dados do evento
 
 def login_user(request):    # função que
     return render(request, 'login.html') #renderiza a página 'login.html'

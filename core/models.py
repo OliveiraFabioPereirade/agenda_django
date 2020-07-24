@@ -71,3 +71,6 @@ class Evento(models.Model):
 # python manage.py makemigrations core                  (cria o 0004)
 # python manage.py sqlmigrate core 0004                 (mostra as modificações)
 # python manage.py migrate core 0004                    (aplica as modificações)
+
+    def get_data_input_evento(self): # cria função
+        return self.data_evento.strftime('%Y-%m-%dT%H:%M') # que retorna a data e hora do evento formatadas para datetime-local

@@ -12,7 +12,7 @@
         {% for evento in eventos %} <!-- quando está entre "chavePorcentagem" realiza comandos python -->
             <li>
                 {{ evento.titulo }} - {{ evento.get_data_evento }} - {{ evento.local }}
-                ( <a href="#">Editar</a>
+                ( <a href="evento/?id={{ evento.id }}">Editar</a> <!-- '?id=' para passar id no GET -->
                 / <a href="evento/delete/{{ evento.id }}">Excluir</a> )
             </li>
                                     <!-- quando está entre "chaveChave" exibe um elemento -->
