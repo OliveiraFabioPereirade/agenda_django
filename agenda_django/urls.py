@@ -25,6 +25,7 @@ urlpatterns = [
     path('agenda/', views.lista_eventos), # cria rota 'agenda/' para executar 'lista_eventos'
     path('agenda/evento/', views.evento), # cria rota 'agenda/evento' para permitir o cadastro de eventos
     path('agenda/evento/submit', views.submit_evento), # cria rota 'agenda/evento/submit' para salvar eventos cadastrados
+    path('agenda/evento/delete/<int:id_evento>', views.delete_evento), # cria rota 'agenda/evento/delete' para apagar eventos cadastrados
     path('', RedirectView.as_view(url= '/agenda/')),  # redireciona para rota '/agenda/' como se fosse uma view
     path('login/', views.login_user),  # cria rota 'login/' para permitir login do usuário
     path('login/submit', views.submit_login),  # cria rota 'login/submit/' para tratar login do usuário

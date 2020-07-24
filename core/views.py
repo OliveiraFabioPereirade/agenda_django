@@ -16,6 +16,7 @@ from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 
 
+@login_required(login_url='/login/')  # exige autênticação para função, sem autenticação: direciona para a página '/login/'
 def eventos(request, titulo_evento): # função que recebe requisição e título
      consulta = Evento.objects.get(titulo = titulo_evento) # procura por evento que tenha o título recebido
      descricao = consulta.descricao # pega a descrição do evento encontrado
@@ -28,6 +29,15 @@ def lista_eventos(request): # função que
     evento = Evento.objects.filter(usuario= usuario) # obtém uma lista dos eventos do usuário da requisição
     dados = {'eventos' : evento} # cria um dicionário com a lista de eventos
     return render(request, 'agenda_django.html', dados) # renderiza a página 'agenda_django.html' e passa o dicionário
+
+@login_required(login_url='/login/')  # exige autênticação para função, sem autenticação: direciona para a página '/login/'
+def delete_evento(request,id_evento): # função que
+    Evento.objects.filter(id=id_evento).delete() # apaga o evento com id igual ao id_evento
+    return redirect('/')  # redireciona para a página principal
+
+
+
+
 
 @login_required(login_url='/login/')  # exige autênticação para função, sem autenticação: direciona para a página '/login/'
 def submit_evento(request):  # função que
