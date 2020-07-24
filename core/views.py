@@ -32,7 +32,10 @@ def lista_eventos(request): # função que
 
 @login_required(login_url='/login/')  # exige autênticação para função, sem autenticação: direciona para a página '/login/'
 def delete_evento(request,id_evento): # função que
-    Evento.objects.filter(id=id_evento).delete() # apaga o evento com id igual ao id_evento
+    usuario = request.user # pega o nome do usuário na requisição
+    evento = Evento.objects.get(id=id_evento) # pega o evento com id igual ao id_evento
+    if usuario == evento.usuario: # se usuario da requisição é o mesmo do evento:
+        evento.delete() # apaga o evento com id igual ao id_evento
     return redirect('/')  # redireciona para a página principal
 
 
