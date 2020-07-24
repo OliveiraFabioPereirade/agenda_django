@@ -48,10 +48,17 @@ def submit_evento(request):  # função que
         usuario = request.user # pega o valor do usuario na requisição
         id_evento = request.POST.get('id_evento') # pega o valor do id_evento no POST da requisição
         if id_evento: # se id_evento não for vazio, é uma alteração, então:
-            Evento.objects.filter(id= id_evento).update(titulo= titulo,            #atualiza evento e altera campos: titulo
-                                                        data_evento= data_evento,  #                                 data_evento
-                                                        descricao= descricao,      #                                 descricao
-                                                        local= local)              #                                 local
+            evento = Evento.objects.get(id= id_evento) # pega o evento com id igual ao id_evento
+            if usuario == evento.usuario:  # se usuario da requisição é o mesmo do evento:
+                evento.titulo = titulo            # altera campo titulo
+                evento.data_evento = data_evento  # altera campo data_evento
+                evento.descricao = descricao      # altera campo descricao
+                evento.local = local              # altera campo titulo
+                evento.save() # atualiza evento (este método permite validar alterações antes de atualizar
+            # Evento.objects.filter(id= id_evento).update(titulo= titulo,            #atualiza evento e altera campos: titulo
+            #                                             data_evento= data_evento,  #                                 data_evento
+            #                                             descricao= descricao,      #                                 descricao
+            #                                             local= local)              #                                 local
         else:         # se id_evento     for vazio, é uma inserção, então:
             Evento.objects.create(titulo= titulo,            #cria evento e preenche campos: titulo
                                   data_evento= data_evento,  #                               data_evento
