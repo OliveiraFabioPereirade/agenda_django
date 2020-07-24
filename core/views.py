@@ -38,10 +38,6 @@ def delete_evento(request,id_evento): # função que
         evento.delete() # apaga o evento com id igual ao id_evento
     return redirect('/')  # redireciona para a página principal
 
-
-
-
-
 @login_required(login_url='/login/')  # exige autênticação para função, sem autenticação: direciona para a página '/login/'
 def submit_evento(request):  # função que
     if request.POST:  # se requisição     for POST:
