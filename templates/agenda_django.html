@@ -10,10 +10,12 @@
 
     <ul style="font-size: 18px">    <!-- aumenta letra -->
         {% for evento in eventos %} <!-- quando está entre "chavePorcentagem" realiza comandos python -->
-            <li>
-                {{ evento.titulo }} - {{ evento.get_data_evento }} - {{ evento.local }}
-                ( <a href="evento/?id={{ evento.id }}">Editar</a> <!-- '?id=' para passar id no GET -->
-                / <a href="evento/delete/{{ evento.id }}">Excluir</a> )
+            <li><!-- se o evento estiver atrasado escreve evento em vermelho -->
+                <div style= {% if evento.get_evento_atrasado %} "color:red" {% endif %}>
+                    {{ evento.titulo }} - {{ evento.get_data_evento }} - {{ evento.local }}
+                    ( <a href="evento/?id={{ evento.id }}">Editar</a> <!-- '?id=' para passar id no GET -->
+                    / <a href="evento/delete/{{ evento.id }}">Excluir</a> )
+                </div>
             </li>
                                     <!-- quando está entre "chaveChave" exibe um elemento -->
         {% endfor %}                <!-- este bloco escreve o titulo, a data, e o local de cada evento na lista eventos -->

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User # importa lista usuários do django
+from datetime import datetime  # permite obter hora e data atual
 
 # Create your models here.
 
@@ -74,3 +75,9 @@ class Evento(models.Model):
 
     def get_data_input_evento(self): # cria função
         return self.data_evento.strftime('%Y-%m-%dT%H:%M') # que retorna a data e hora do evento formatadas para datetime-local
+
+    def get_evento_atrasado(self):  # cria função que
+        if self.data_evento < datetime.now():  # se data_evento for anterior a data atual:
+            return True                        # retorne True
+        else:                                  # senão:
+            return False                       # retorne False
