@@ -4,9 +4,13 @@ from django.shortcuts import render, HttpResponse, redirect
 #                              |          +--> transforma argumento em resposta HTTP
 #                              +--> renderiza elementos HTML
 
-from core.models import Evento
+from core.models import Evento # importa a tabela Evento
 from django.contrib.auth.decorators import login_required  # decorador (começa com @) que exige autênticação para função
 from django.contrib import messages # permite passar mensagens
+from datetime import datetime,timedelta
+#                        |        |
+#                        |        +--> realizar operações com data e hora
+#                        +--> permite obter hora e data atual
 from django.contrib.auth import authenticate, login, logout
 #                                   |           |       |
 #                                   |           |       +--> permite logout
@@ -26,7 +30,11 @@ def eventos(request, titulo_evento): # função que recebe requisição e títul
 @login_required(login_url='/login/')  # exige autênticação para função, sem autenticação: direciona para a página '/login/'
 def lista_eventos(request): # função que
     usuario = request.user # pega o nome do usuário na requisição
-    evento = Evento.objects.filter(usuario= usuario) # obtém uma lista dos eventos do usuário da requisição
+    data_atual = datetime.now() - timedelta(hours= 1) # pega a data e hora atual com atraso de 1 hora
+    evento = Evento.objects.filter(usuario= usuario, # obtém uma lista dos eventos do usuário da requisição
+                                   # data_evento = data_atual)      # na data e hora igual     a data_evento
+                                   # data_evento__lt = data_atual)  # na data e hora anterior  a data_evento
+                                   data_evento__gt = data_atual)  # na data e hora posterior a data_evento
     dados = {'eventos' : evento} # cria um dicionário com a lista de eventos
     return render(request, 'agenda_django.html', dados) # renderiza a página 'agenda_django.html' e passa o dicionário
 
