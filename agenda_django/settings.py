@@ -23,11 +23,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'pr4)nq@l%t@1*f8hj@_np(9-gaqlq8o*mvl99!f*wgznvc8-hr'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True           # informações de debug nos erros está   habilitada
-# ALLOWED_HOSTS = []     # nenhum    host  habilitado
+DEBUG = True           # informações de debug nos erros está   habilitada
+ALLOWED_HOSTS = []     # nenhum    host  habilitado
 
-DEBUG = False          # informações de debug nos erros está desabilitada
-ALLOWED_HOSTS = ['*']  # todos os  hosts habilitados
+# DEBUG = False          # informações de debug nos erros está desabilitada
+# ALLOWED_HOSTS = ['*']  # todos os  hosts habilitados
 
 
 # Application definition

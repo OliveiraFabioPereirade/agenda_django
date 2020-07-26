@@ -7,7 +7,10 @@ from django.shortcuts import render, HttpResponse, redirect
 from core.models import Evento # importa a tabela Evento
 from django.contrib.auth.decorators import login_required  # decorador (começa com @) que exige autênticação para função
 from django.contrib import messages # permite passar mensagens
-from django.http.response import Http404
+from django.http.response import Http404, JsonResponse
+#                                    |        |
+#                                    |        +--> permite responder no formato Json
+#                                    +--> permite responder com 'NOT FOUND'
 from datetime import datetime,timedelta
 #                        |        |
 #                        |        +--> realizar operações com data e hora
@@ -108,3 +111,10 @@ def logout_user(request):  # função que
     logout(request) # realiza logout do usuário
     return redirect('/')  # redireciona para a página principal
 
+@login_required(login_url='/login/')  # exige autênticação para função, sem autenticação: direciona para a página '/login/'
+def json_lista_evento(request): # função que
+    usuario = request.user # pega o nome do usuário na requisição
+    evento = Evento.objects.filter(usuario= usuario).values('id', 'titulo')
+                 # obtém uma relação dos valores 'id' e 'titulo' nos eventos do usuário da requisição
+    return JsonResponse(list(evento), safe=False) # converte relação em lista e retorna no formato Json
+                                    # safe=False porque não está passando um dicionário
