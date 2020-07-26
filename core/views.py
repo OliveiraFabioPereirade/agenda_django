@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User # importa módulo de User
 from django.shortcuts import render, HttpResponse, redirect
 #                              |          |           |
 #                              |          |           +--> redireciona requisição para outra rota
@@ -111,9 +112,8 @@ def logout_user(request):  # função que
     logout(request) # realiza logout do usuário
     return redirect('/')  # redireciona para a página principal
 
-@login_required(login_url='/login/')  # exige autênticação para função, sem autenticação: direciona para a página '/login/'
-def json_lista_evento(request): # função que
-    usuario = request.user # pega o nome do usuário na requisição
+def json_lista_evento(request, id_usuario): # função que
+    usuario = User.objects.get(id=id_usuario) # pega usuario cujo id seja igual ao passado na requisição
     evento = Evento.objects.filter(usuario= usuario).values('id', 'titulo')
                  # obtém uma relação dos valores 'id' e 'titulo' nos eventos do usuário da requisição
     return JsonResponse(list(evento), safe=False) # converte relação em lista e retorna no formato Json
