@@ -23,9 +23,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'pr4)nq@l%t@1*f8hj@_np(9-gaqlq8o*mvl99!f*wgznvc8-hr'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True           # informações de debug nos erros está   habilitada
+# ALLOWED_HOSTS = []     # nenhum    host  habilitado
 
-ALLOWED_HOSTS = []
+DEBUG = False          # informações de debug nos erros está desabilitada
+ALLOWED_HOSTS = ['*']  # todos os  hosts habilitados
 
 
 # Application definition
@@ -113,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'pt-br' # português brasileiro
 
 # TIME_ZONE = 'UTC' # fuso horário americano
-TIME_ZONE = 'Americas/Sao_Paulo' # fuso horário Brasil - São Paulo
+TIME_ZONE = 'America/Sao_Paulo' # fuso horário Brasil - São Paulo
 
 USE_I18N = True
 

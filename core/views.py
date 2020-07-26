@@ -7,6 +7,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from core.models import Evento # importa a tabela Evento
 from django.contrib.auth.decorators import login_required  # decorador (começa com @) que exige autênticação para função
 from django.contrib import messages # permite passar mensagens
+from django.http.response import Http404
 from datetime import datetime,timedelta
 #                        |        |
 #                        |        +--> realizar operações com data e hora
@@ -41,9 +42,14 @@ def lista_eventos(request): # função que
 @login_required(login_url='/login/')  # exige autênticação para função, sem autenticação: direciona para a página '/login/'
 def delete_evento(request,id_evento): # função que
     usuario = request.user # pega o nome do usuário na requisição
-    evento = Evento.objects.get(id=id_evento) # pega o evento com id igual ao id_evento
-    if usuario == evento.usuario: # se usuario da requisição é o mesmo do evento:
+    try: # tenta
+        evento = Evento.objects.get(id=id_evento) # pega o evento com id igual ao id_evento
+    except Exception: # se o evento com id não é igual ao id_evento
+        raise Http404() # informa que a requisição não foi encontrada no servidor
+    if usuario == evento.usuario: # se usuario da requisição     é o mesmo do evento:
         evento.delete() # apaga o evento com id igual ao id_evento
+    else:                         # se usuario da requisição não é o mesmo do evento:
+        raise Http404() # informa que a requisição não foi encontrada no servidor
     return redirect('/')  # redireciona para a página principal
 
 @login_required(login_url='/login/')  # exige autênticação para função, sem autenticação: direciona para a página '/login/'
